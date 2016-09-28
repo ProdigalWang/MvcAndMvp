@@ -1,4 +1,4 @@
-package prodigalwang.androidframe.mvc.model;
+package prodigalwang.androidframe.mvp.model;
 
 import prodigalwang.androidframe.callback.LoginCallBack;
 import prodigalwang.androidframe.db.MyDataBaseHelper;
@@ -7,12 +7,9 @@ import prodigalwang.androidframe.utils.MyAppliction;
 
 /**
  * Author：ProdigalWang
- * Time: 2016/9/26
- * 模型层实现,完成具体的数据操作。
+ * Time: 2016/9/28
  */
-
-public class LoginModelImpl implements ILoginModel {
-
+public class LoginModelImpl implements ILoginModel{
     private MyDataBaseHelper myDataBaseHelper;
 
     @Override

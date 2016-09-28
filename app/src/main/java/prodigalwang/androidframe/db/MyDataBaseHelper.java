@@ -1,10 +1,11 @@
 package prodigalwang.androidframe.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import prodigalwang.androidframe.bean.User;
 
 /**
  * Author：ProdigalWang
@@ -12,16 +13,15 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
-    private Context mContext;
 
     private static final String CREATE_LOGIN = "create table LoginInfo(" +
             "id integer primary key autoincrement," +
             "name text," +
             "password text)";
 
+
     public MyDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-        mContext = context;
     }
 
     @Override
@@ -45,20 +45,27 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int queryData(SQLiteDatabase db, String name, String pwd) {
+    public int queryData( User user) {
 
         String sql = "select * from LoginInfo where name=?";
-        Cursor cursor = db.rawQuery(sql, new String[]{name});
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[]{user.getName()});
 
-        if (cursor.moveToFirst()) {
-            if (cursor.getString(cursor.getColumnIndex("password")).equals(pwd)) {
-                cursor.close();
-                return 1;//正确
-            } else {
-                return 0;//密码错误
+        try{
+            if (cursor.moveToFirst()) {
+                if (cursor.getString(cursor.getColumnIndex("password")).equals(user.getPwd())) {
+
+                    return 1;//正确
+                } else {
+                    return 0;//密码错误
+                }
             }
+            return -1;//用户名错误(没有当前用户)
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            cursor.close();
         }
-        return -1;//用户名错误(没有当前用户)
+        return -2;//发生错误
 
     }
 }

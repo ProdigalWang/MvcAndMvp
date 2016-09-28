@@ -1,4 +1,4 @@
-package prodigalwang.androidframe.activity;
+package prodigalwang.androidframe.mvc;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,10 @@ import prodigalwang.androidframe.db.MyDataBaseHelper;
 import prodigalwang.androidframe.mvc.controller.LoginController;
 import prodigalwang.androidframe.mvc.view.LoginView;
 
-public class LoginActivity extends AppCompatActivity {
+/**
+        * 此时Activity就变为了承载视图层的容器。
+        */
+public class MvcLoginActivity extends AppCompatActivity {
 
     private MyDataBaseHelper myDataBaseHelper;
     private SQLiteDatabase db;
@@ -20,18 +23,22 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_mvc_login);
 
         //初始化一个本地用户用来模拟登陆。
         myDataBaseHelper = new MyDataBaseHelper(this, "Login.db", null, 1);
         db = myDataBaseHelper.getWritableDatabase();
-        myDataBaseHelper.initData(db);
+        //myDataBaseHelper.initData(db);
 
+        MVC();
+    }
+
+    private void MVC(){
         //控件初始化和绑定
-        loginView= (LoginView) findViewById(R.id.activity_login);
+        loginView= (LoginView) findViewById(R.id.activity_login_mvc);
         loginView.initView();
 
-        loginController=new LoginController(loginView,this);//视图层结合控制层
+        loginController=new LoginController(loginView);//视图层结合控制层
         loginView.setOnclikLister(loginController);
     }
 }

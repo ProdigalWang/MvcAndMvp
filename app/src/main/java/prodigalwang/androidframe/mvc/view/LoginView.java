@@ -28,9 +28,9 @@ public class LoginView extends LinearLayout {
     }
 
     public void initView() {
-        mUsername = (EditText) findViewById(R.id.et_name);
-        mPassword = (EditText) findViewById(R.id.et_pwd);
-        mLoginBtn = (Button) findViewById(R.id.bt_login);
+        mUsername = (EditText) findViewById(R.id.et_name_mvc);
+        mPassword = (EditText) findViewById(R.id.et_pwd_mvc);
+        mLoginBtn = (Button) findViewById(R.id.bt_login_mvc);
     }
 
     public String getName() {

@@ -4,8 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import prodigalwang.androidframe.R;
-import prodigalwang.androidframe.activity.LoginActivity;
 import prodigalwang.androidframe.callback.LoginCallBack;
+import prodigalwang.androidframe.bean.User;
 import prodigalwang.androidframe.mvc.model.ILoginModel;
 import prodigalwang.androidframe.mvc.model.LoginModelImpl;
 import prodigalwang.androidframe.mvc.view.LoginView;
@@ -20,15 +20,15 @@ public class LoginController implements View.OnClickListener {
     private LoginView loginView;
     private ILoginModel iLoginModel;
 
-    public LoginController( LoginView loginView,LoginActivity loginActivity){
+    public LoginController( LoginView loginView){
         this.loginView=loginView;
 
-        iLoginModel=new LoginModelImpl(loginActivity);
+        iLoginModel=new LoginModelImpl();
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bt_login:
+            case R.id.bt_login_mvc:
                 String username=loginView.getName();
                 String pwd=loginView.getPwd();
 
@@ -43,7 +43,7 @@ public class LoginController implements View.OnClickListener {
                 //调用模型层去处理具体的请求
                 iLoginModel.login(username, pwd, new LoginCallBack() {
                     @Override
-                    public void success() {
+                    public void success(User user) {
                         loginView.loginSuccess();
                     }
 
